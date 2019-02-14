@@ -9,26 +9,47 @@ import styleMap from './styleMap'
 import router from './router'
 
 var subdomain = require('express-subdomain')
-
+const allowedDomains = ['isha', 'drishti']
 const app = express()
 
 app.use(cors())
 app.use(express.static("public"))
 app.use(subdomain('isha', router));
 
+const getSubdomain = (subdomains) => {
+  if (subdomains.length == 0) {
+    return null
+  }
+  else if (subdomains.length == 1) {
+    if (allowedDomains.includes(subdomains[0]) ) {
+      return subdomains[0]
+    } else {
+      return 'invalid'
+    }
+  } else {
+    return 'invalid'
+  }
+}
+
 app.get("*", (req, res, next) => {
   console.log(req.subdomains, 'subdomains')
-
+  let subdomain = getSubdomain(req.subdomains)
+  if (subdomain == 'invalid') {
+    res.send('Invalid domain')
+  }
+  subdomain = subdomain ? subdomain : 'root'
+  console.log(subdomain, 'domain')
+  const domainStyle = styleMap[subdomain]
   const markup = renderToString(
-      <App style = {styleMap.root} test= 'one' />
+      <App style = {domainStyle} test= 'one' />
   )
 
   res.send(`
     <!DOCTYPE html>
     <html>
       <head>
-        <title>${styleMap.root.title}</title>
-        <meta name=${styleMap.root.meta.name} content=${styleMap.root.meta.content}>
+        <title>${domainStyle.title}</title>
+        <meta name=${domainStyle.meta.name} content=${domainStyle.meta.content}>
         <script src="/bundle.js" defer></script>
       </head>
 
