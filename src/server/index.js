@@ -20,7 +20,7 @@ app.get("*", (req, res, next) => {
   console.log(req.subdomains, 'subdomains')
 
   const markup = renderToString(
-      <App style = {styleMap.one} test= 'one' />
+      <App style = {styleMap.root} test= 'one' />
   )
 
   res.send(`
