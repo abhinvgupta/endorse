@@ -60,31 +60,43 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+module.exports = require("react");
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+module.exports = require("express");
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _express = __webpack_require__(2);
+var _express = __webpack_require__(1);
 
 var _express2 = _interopRequireDefault(_express);
 
-var _cors = __webpack_require__(4);
+var _cors = __webpack_require__(3);
 
 var _cors2 = _interopRequireDefault(_cors);
 
-var _react = __webpack_require__(1);
+var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _server = __webpack_require__(5);
+var _server = __webpack_require__(4);
 
-var _reactRouterDom = __webpack_require__(3);
+var _reactRouterDom = __webpack_require__(5);
 
 var _serializeJavascript = __webpack_require__(6);
 
@@ -127,17 +139,15 @@ var getSubdomain = function getSubdomain(subdomains) {
 };
 
 app.get("*", function (req, res, next) {
-  console.log(req.subdomains, 'subdomains');
-  var subdomain = getSubdomain(req.subdomains);
-  if (subdomain == 'invalid') {
+  var domain = getSubdomain(req.subdomains);
+  if (domain == 'invalid') {
     res.send('Invalid domain');
   }
-  subdomain = subdomain ? subdomain : 'root';
-  console.log(subdomain, 'domain');
-  var domainStyle = _styleMap2.default[subdomain];
-  var markup = (0, _server.renderToString)(_react2.default.createElement(_App2.default, { style: domainStyle, test: "one" }));
+  domain = domain ? domain : 'root';
+  var domainStyle = _styleMap2.default[domain];
+  var markup = (0, _server.renderToString)(_react2.default.createElement(_App2.default, null));
 
-  res.send("\n    <!DOCTYPE html>\n    <html>\n      <head>\n        <title>" + domainStyle.title + "</title>\n        <meta name=" + domainStyle.meta.name + " content=" + domainStyle.meta.content + ">\n        <script src=\"/bundle.js\" defer></script>\n      </head>\n\n      <body>\n        <div id=\"app\">" + markup + "</div>\n      </body>\n    </html>\n  ");
+  res.send("\n    <!DOCTYPE html>\n    <html>\n      <head>\n        <title>" + domainStyle.title + "</title>\n        <meta name=" + domainStyle.meta.name + " content=" + domainStyle.meta.content + ">\n        <script src=\"/bundle.js\" defer></script>\n        <script>window.subdomain = \"" + domain + "\"</script>\n      </head>\n\n      <body>\n        <div id=\"app\" >" + markup + "</div>\n      </body>\n    </html>\n  ");
 });
 
 app.listen(3000, function () {
@@ -152,34 +162,22 @@ app.listen(3000, function () {
 // */
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-module.exports = require("react");
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-module.exports = require("express");
-
-/***/ }),
 /* 3 */
-/***/ (function(module, exports) {
-
-module.exports = require("react-router-dom");
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports) {
 
 module.exports = require("cors");
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-dom/server");
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-router-dom");
 
 /***/ }),
 /* 6 */
@@ -200,11 +198,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(1);
+var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
-
-var _reactRouterDom = __webpack_require__(3);
 
 var _Counter = __webpack_require__(8);
 
@@ -218,16 +214,20 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var color = void 0;
+
 var App = function (_Component) {
   _inherits(App, _Component);
 
-  function App(props, state) {
+  function App(props) {
     _classCallCheck(this, App);
+
+    // the following bindings are necessary to make `this` work in the callback
 
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-    console.log(state);
-    console.log(_this.props.style, _this.props.test, 'paththhh');
+    console.log(props, 'props');
+
     return _this;
   }
 
@@ -238,7 +238,7 @@ var App = function (_Component) {
       return _react2.default.createElement(
         'div',
         { className: 'App' },
-        _react2.default.createElement(_Counter2.default, { colour: 'green' })
+        _react2.default.createElement(_Counter2.default, { colour: color })
       );
     }
   }]);
@@ -261,7 +261,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(1);
+var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -339,7 +339,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _react = __webpack_require__(1);
+var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -382,7 +382,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _express = __webpack_require__(2);
+var _express = __webpack_require__(1);
 
 var _express2 = _interopRequireDefault(_express);
 

@@ -32,16 +32,14 @@ const getSubdomain = (subdomains) => {
 }
 
 app.get("*", (req, res, next) => {
-  console.log(req.subdomains, 'subdomains')
-  let subdomain = getSubdomain(req.subdomains)
-  if (subdomain == 'invalid') {
+  let domain = getSubdomain(req.subdomains)
+  if (domain == 'invalid') {
     res.send('Invalid domain')
   }
-  subdomain = subdomain ? subdomain : 'root'
-  console.log(subdomain, 'domain')
-  const domainStyle = styleMap[subdomain]
+  domain = domain ? domain : 'root'
+  const domainStyle = styleMap[domain]
   const markup = renderToString(
-      <App style = {domainStyle} test= 'one' />
+      <App />
   )
 
   res.send(`
@@ -51,10 +49,11 @@ app.get("*", (req, res, next) => {
         <title>${domainStyle.title}</title>
         <meta name=${domainStyle.meta.name} content=${domainStyle.meta.content}>
         <script src="/bundle.js" defer></script>
+        <script>window.subdomain = "${domain}"</script>
       </head>
 
       <body>
-        <div id="app">${markup}</div>
+        <div id="app" >${markup}</div>
       </body>
     </html>
   `)
