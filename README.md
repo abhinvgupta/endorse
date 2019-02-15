@@ -1,4 +1,4 @@
-# endorse
+# Endore React App
 
 To BUILD app:
 
