@@ -8,7 +8,7 @@ To START app:
 
 npm run start
 
-Urls: 
+Urls To try the app: 
 http://localhost:3000/  ,  
 http://isha.a.localhost:3000/   , 
 http://drishti.a.localhost:3000/     ,
