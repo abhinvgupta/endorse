@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 import Counter from './Counter'
 
-let color;
+let color = 'green';
 
 class App extends Component {
   constructor(props) {
     super(props)
     // the following bindings are necessary to make `this` work in the callback
   
-    console.log(props,'props')
 
+    console.log(' printable', props.style, typeof props.style)
+    color = props.style.counterColor
   }
   render() {
     

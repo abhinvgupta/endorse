@@ -5,8 +5,7 @@ import { renderToString } from "react-dom/server"
 import { StaticRouter, matchPath } from "react-router-dom"
 import serialize from "serialize-javascript"
 import App from '../shared/App'
-import styleMap from './styleMap'
-import router from './router'
+import styleMap from '../shared/styleMap.js'
 
 var subdomain = require('express-subdomain')
 const allowedDomains = ['isha', 'drishti']
@@ -14,7 +13,6 @@ const app = express()
 
 app.use(cors())
 app.use(express.static("public"))
-app.use(subdomain('isha', router));
 
 const getSubdomain = (subdomains) => {
   if (subdomains.length == 0) {
@@ -37,9 +35,10 @@ app.get("*", (req, res, next) => {
     res.send('Invalid domain')
   }
   domain = domain ? domain : 'root'
+  const styleObject = styleMap[domain]
   const domainStyle = styleMap[domain]
   const markup = renderToString(
-      <App />
+      <App style = {styleObject} />
   )
 
   res.send(`
