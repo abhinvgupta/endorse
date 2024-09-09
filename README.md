@@ -1,4 +1,4 @@
-# Endore React App
+# React App that handles multiple subdomains
 
 To BUILD app:
 

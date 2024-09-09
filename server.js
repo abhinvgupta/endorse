@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,18 +71,12 @@ module.exports = require("react");
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
-
-module.exports = require("express");
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _express = __webpack_require__(1);
+var _express = __webpack_require__(2);
 
 var _express2 = _interopRequireDefault(_express);
 
@@ -112,7 +106,7 @@ var _styleMap2 = _interopRequireDefault(_styleMap);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var subdomain = __webpack_require__(12);
+var subdomain = __webpack_require__(11);
 var allowedDomains = ['isha', 'drishti'];
 var app = (0, _express2.default)();
 
@@ -150,12 +144,11 @@ app.listen(3000, function () {
   console.log("Server is listening on port: 3000");
 });
 
-/// /*
-//   1) Just get shared App rendering to string on server then taking over on client.
-//   2) Pass data to <App /> on server. Show diff. Add data to window then pick it up on the client too.
-//   3) Instead of static data move to dynamic data (github gists)
-//   4) add in routing.
-// */
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = require("express");
 
 /***/ }),
 /* 3 */
@@ -192,8 +185,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(0);
@@ -212,7 +203,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var color = 'green';
+var color = 'black';
 
 var App = function (_Component) {
   _inherits(App, _Component);
@@ -220,12 +211,8 @@ var App = function (_Component) {
   function App(props) {
     _classCallCheck(this, App);
 
-    // the following bindings are necessary to make `this` work in the callback
-
-
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-    console.log(' printable', props.style, _typeof(props.style));
     color = props.style.counterColor;
     return _this;
   }
@@ -371,8 +358,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 11 */,
-/* 12 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = require("express-subdomain");

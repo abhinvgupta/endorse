@@ -9,7 +9,7 @@
   },
   "author": "",
   "license": "MIT",
-  "description": "",
+  "description": "Reactjs app to handle multiple subdomains",
   "babel": {
     "presets": [
       "env",
